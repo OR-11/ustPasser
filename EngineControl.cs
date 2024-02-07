@@ -5,7 +5,8 @@ namespace ustPasser
 {
     public class EngineControl
     {
-        public static int BootEngine()//1:failed,0:scceeded
+        //https://learn.microsoft.com/ja-jp/dotnet/api/system.diagnostics.process?view=net-8.0
+        public static (int, System.Diagnostics.Process) BootEngine()//1:failed,0:scceeded
         {
             //string user = Environment.UserName;
             System.Diagnostics.Process result=null;
@@ -38,10 +39,35 @@ namespace ustPasser
                     }
                 }
             }
-            else return 1;//誰やねんお前
-            if (result == null) return 1;
-            else return 0;
+            else return (1, null);//誰やねんお前
+            if (result == null) return (1, null);
+            else return (0, result);
         }
-        
+        public static int ShutDownEngine(System.Diagnostics.Process process)
+        {
+            try
+            {
+                process.Kill();
+                Console.WriteLine(process);
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
+            return 0;
+        }
+        public static int RebootEngine(System.Diagnostics.Process process)
+        {
+            try
+            {
+                process.WaitForExit();
+                BootEngine();
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
+            return 0;
+        }
     }
 }
