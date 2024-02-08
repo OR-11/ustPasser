@@ -1,10 +1,19 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Net.Http;
 
 namespace ustPasser
 {
-    public class EngineControl
+    public class VoiceVoxEngineControl
     {
+        public static string GetEngineVersion()
+        {
+            return new HttpClient().GetStringAsync(new Uri(@"http://127.0.0.1:50021/version")).Result;
+        }
+        public static string GetCoreVersion()
+        {
+            return new HttpClient().GetStringAsync(new Uri(@"http://127.0.0.1:50021/core_versions")).Result;
+        }
         //https://learn.microsoft.com/ja-jp/dotnet/api/system.diagnostics.process?view=net-8.0
         public static (int, System.Diagnostics.Process) BootEngine()//1:failed,0:scceeded
         {
@@ -47,7 +56,7 @@ namespace ustPasser
         {
             try
             {
-                process.Kill();
+                process.Kill();//VOICEVOXも多分この方法でやってる
                 Console.WriteLine(process);
             }
             catch (Exception)
