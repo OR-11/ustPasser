@@ -14,11 +14,17 @@ namespace ustPasser
             using var Http = new HttpClient();
             return Http.GetStringAsync(@"http://127.0.0.1:50021/singers?core_version=" + core_version).Result;
         }
-        
+
+        //frame_length仕様
+        //https://github.com/VOICEVOX/voicevox/blob/main/src/sing/domain.ts#L105
         public static string SingFrameAudioQuery(int speaker, string core_version, Note[] notes)
         {//https://qiita.com/rawr/items/f78a3830d894042f891b
             using var Http = new HttpClient();
             string jsonContent =@"{""notes"":[";
+
+            int restDuration = 1;//とりあえず1らしい
+            //最初に休符を追加
+
             for (int i = 0; i < notes.Length; i++)
             {
                 var j = notes[i];
@@ -26,6 +32,7 @@ namespace ustPasser
                 jsonContent += @"{""key"":" + j.key + @",""frame_length"":" + j.frame_length + @",""lyric"":""" + j.lyric + @"""}";
             }
             jsonContent += @"]}";
+            Console.WriteLine(jsonContent);
             var content = new StringContent(jsonContent, Encoding.UTF8, @"application/json");
             return Http.PostAsync(@"http://127.0.0.1:50021/sing_frame_audio_query?speaker=" + speaker + @"&core_version=" + core_version, content).Result.Content.ReadAsStringAsync().Result;
         }

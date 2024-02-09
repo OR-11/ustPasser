@@ -6,6 +6,10 @@ namespace ustPasser
 {
     public class VoiceVoxEngineControl
     {
+        public static string EngineManifest()
+        {
+            return new HttpClient().GetStringAsync(new Uri(@"http://127.0.0.1:50021/engine_manifest")).Result;
+        }
         public static string GetEngineVersion()
         {
             return new HttpClient().GetStringAsync(new Uri(@"http://127.0.0.1:50021/version")).Result;
