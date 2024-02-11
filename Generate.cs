@@ -18,27 +18,26 @@ namespace ustPasser
 
         //frame_length仕様
         //https://github.com/VOICEVOX/voicevox/blob/main/src/sing/domain.ts#L105
-        public static string SingFrameAudioQuery(int speaker, string core_version, Note[] notes, float tempo)
+        public static string SingFrameAudioQuery(int speaker, string core_version, Note[] notes, float tempo, float StartRestLengthSec = 1, float EndRestLengthSec = 1)
         {//https://qiita.com/rawr/items/f78a3830d894042f891b
             using var Http = new HttpClient();
             string jsonContent =@"{""notes"":[";
 
             //https://github.com/VOICEVOX/voicevox/blob/55d3df8712b54360d2428a0954fcd9d33f67dd16/src/store/singing.ts#L877
-            int restDurationSeconds = 1;//とりあえず1らしい
+            (float start, float end) restDurationSeconds = (StartRestLengthSec, EndRestLengthSec);//とりあえず1らしい
             decimal frameRate = JsonToLibary.ParseJson(VoiceVoxEngineControl.EngineManifest())["frame_rate"];
-            int restFrameLength = Convert.ToInt32(Math.Round(restDurationSeconds * frameRate,MidpointRounding.AwayFromZero));
+            (int start, int end) restFrameLength = (Convert.ToInt32(Math.Round((decimal)restDurationSeconds.start * frameRate,MidpointRounding.AwayFromZero)), Convert.ToInt32(Math.Round((decimal)restDurationSeconds.end * frameRate, MidpointRounding.AwayFromZero)));
             List<Note> notesForRequestToEngine = new List<Note>();
             //最初に休符を追加
-            notesForRequestToEngine.Add(new Note(null, restFrameLength, ""));
+            notesForRequestToEngine.Add(new Note(null, restFrameLength.start, ""));
 
-            //int frame = 0;
             foreach (Note note in notes)
             {
                 //Console.WriteLine(Convert.ToInt32(Math.Round(60 / (decimal)tempo * (decimal)note.length * frameRate, MidpointRounding.AwayFromZero)));
                 notesForRequestToEngine.Add(new Note(note.key,Convert.ToInt32(Math.Round(60/(decimal)tempo*(decimal)note.length*frameRate,MidpointRounding.AwayFromZero)),note.lyric));
             }
             //最後にも休符を追加
-            notesForRequestToEngine.Add(new Note(null, restFrameLength, ""));
+            notesForRequestToEngine.Add(new Note(null, restFrameLength.end, ""));
 
             for (int i = 0; i < notesForRequestToEngine.Count; i++)
             {
@@ -92,14 +91,14 @@ namespace ustPasser
 
     public class Note
     {
-        public Note(int? key, int length, string lyric)
+        public Note(int? key, float length, string lyric)
         {
             this.key = key;
             this.length = length;
             this.lyric = lyric;
         }
         public int? key;
-        public int length;
+        public float length;
         public string lyric;
     }
 }
