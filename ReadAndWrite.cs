@@ -14,7 +14,7 @@ namespace ustPasser
             try
             {
                 //File.WriteAllText(filePass, content);
-                using (var stream = File.Open(filePass, FileMode.Create, FileAccess.ReadWrite))
+                using (var stream = File.Open(filePass, FileMode.Create, FileAccess.Write))
                 {
                     using (var writer = new BinaryWriter(stream, Encoding.UTF8, false))
                     {
