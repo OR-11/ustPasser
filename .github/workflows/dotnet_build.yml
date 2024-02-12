@@ -4,8 +4,10 @@
 name: .NET-Builder
 
 on:
-  push:
-    branches: [ "master" ]
+  release: 
+    types:[published]
+  #push:
+    #branches: [ "master" ]
 
 jobs:
   #Macbuild:
