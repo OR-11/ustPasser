@@ -3,7 +3,7 @@ tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: '🚀 機能/Features'
     labels:
-      - '特徴/feature'
+      - '機能/feature'
       - '改善/enhancement'
   - title: '🐛 Bug Fixes'
     labels:
