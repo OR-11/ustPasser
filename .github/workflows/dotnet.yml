@@ -41,7 +41,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
          upload_url: https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.latest_release.outputs.result }}
-         #asset_path: ./ustPasser.dylib
+         asset_path: ./bin/Debug/net5.0/ustPasser.dylib
          asset_name: ustPasser.dylib
          asset_content_type: application/octet-stream
       
@@ -78,7 +78,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
          upload_url: https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.latest_release.outputs.result }}
-         #asset_path: ./ustPasser.dll
+         asset_path: ./bin/Debug/net5.0/ustPasser.dll
          asset_name: ustPasser.dll
          asset_content_type: application/octet-stream
   Ububuild:
@@ -115,6 +115,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
          upload_url: https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.latest_release.outputs.result }}
-         #asset_path: ./ustPasser.so
+         asset_path: ./bin/Debug/net5.0/ustPasser.so
          asset_name: ustPasser.so
          asset_content_type: application/octet-stream
