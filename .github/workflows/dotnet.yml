@@ -29,8 +29,8 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
-          const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
-          const releases = await octokit.rest.repos.listReleases({
+          const gith = github(core.getInput('GITHUB_TOKEN'));
+          const releases = await gith.rest.repos.listReleases({
             owner: context.repo.owner,
             repo: context.repo.repo,
           });
@@ -67,8 +67,8 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
-          const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
-          const releases = await octokit.rest.repos.listReleases({
+          const gith = github(core.getInput('GITHUB_TOKEN'));
+          const releases = await gith.rest.repos.listReleases({
             owner: context.repo.owner,
             repo: context.repo.repo,
           });
@@ -105,8 +105,8 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
-          const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
-          const releases = await octokit.rest.repos.listReleases({
+          const gith = github(core.getInput('GITHUB_TOKEN'));
+          const releases = await gith.rest.repos.listReleases({
             owner: context.repo.owner,
             repo: context.repo.repo,
           });
