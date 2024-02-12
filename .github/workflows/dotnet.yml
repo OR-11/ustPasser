@@ -41,8 +41,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
          upload_url: https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.latest_release.outputs.result }}
-         asset_path: ./bin/Debug/net5.0/ustPasser.dylib
-         asset_name: ustPasser.dylib
+         #asset_path: ./bin/Debug/net5.0/ustPasser.dylib
+         asset_path: ./bin/Debug/net5.0/ustPasser.dll
+         asset_name: ustPasser.dll
          asset_content_type: application/octet-stream
       
   Winbuild:
@@ -115,6 +116,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
          upload_url: https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.latest_release.outputs.result }}
-         asset_path: ./bin/Debug/net5.0/ustPasser.so
-         asset_name: ustPasser.so
+         #asset_path: ./bin/Debug/net5.0/ustPasser.so
+         asset_path: ./bin/Debug/net5.0/ustPasser.dll
+         asset_name: ustPasser.dll
          asset_content_type: application/octet-stream
