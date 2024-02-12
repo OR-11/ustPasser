@@ -29,11 +29,11 @@ jobs:
       uses: actions/github-script@v5
       with:
         script: |
-          const github = new GitHub(core.getInput('GITHUB_TOKEN'));
-          const releases = await github.repos.listReleases({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-          });
+          const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
+        const releases = await octokit.rest.repos.listReleases({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+        });
           const latestRelease = releases.data[0];
           return latestRelease.id;
     - name: Upload binary to release
@@ -67,11 +67,11 @@ jobs:
       uses: actions/github-script@v5
       with:
         script: |
-          const github = new GitHub(core.getInput('GITHUB_TOKEN'));
-          const releases = await github.repos.listReleases({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-          });
+          const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
+        const releases = await octokit.rest.repos.listReleases({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+        });
           const latestRelease = releases.data[0];
           return latestRelease.id;
     - name: Upload binary to release
@@ -105,11 +105,11 @@ jobs:
       uses: actions/github-script@v5
       with:
         script: |
-          const github = new GitHub(core.getInput('GITHUB_TOKEN'));
-          const releases = await github.repos.listReleases({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-          });
+          const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
+        const releases = await octokit.rest.repos.listReleases({
+          owner: context.repo.owner,
+          repo: context.repo.repo,
+        });
           const latestRelease = releases.data[0];
           return latestRelease.id;
     - name: Upload binary to release
