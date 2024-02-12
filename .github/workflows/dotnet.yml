@@ -30,10 +30,10 @@ jobs:
       with:
         script: |
           const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
-        const releases = await octokit.rest.repos.listReleases({
-          owner: context.repo.owner,
-          repo: context.repo.repo,
-        });
+          const releases = await octokit.rest.repos.listReleases({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          });
           const latestRelease = releases.data[0];
           return latestRelease.id;
     - name: Upload binary to release
@@ -68,10 +68,10 @@ jobs:
       with:
         script: |
           const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
-        const releases = await octokit.rest.repos.listReleases({
-          owner: context.repo.owner,
-          repo: context.repo.repo,
-        });
+          const releases = await octokit.rest.repos.listReleases({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          });
           const latestRelease = releases.data[0];
           return latestRelease.id;
     - name: Upload binary to release
@@ -106,10 +106,10 @@ jobs:
       with:
         script: |
           const octokit = github.getOctokit(core.getInput('GITHUB_TOKEN'));
-        const releases = await octokit.rest.repos.listReleases({
-          owner: context.repo.owner,
-          repo: context.repo.repo,
-        });
+          const releases = await octokit.rest.repos.listReleases({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          });
           const latestRelease = releases.data[0];
           return latestRelease.id;
     - name: Upload binary to release
