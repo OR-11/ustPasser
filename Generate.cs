@@ -90,7 +90,7 @@ namespace ustPasser
     }
 
     public class Note
-    {
+    {//keyはmidi準拠、lengthは、sec*frame rate(95くらいのやつ)=length
         public Note(int? key, float length, string lyric)
         {
             this.key = key;

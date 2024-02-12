@@ -28,5 +28,17 @@ namespace ustPasser
             }
             return 0;
         }
+        public static string ReadUstFile(string filePass)
+        {
+            try
+            {
+                EncodingProvider provider = System.Text.CodePagesEncodingProvider.Instance;
+                return File.ReadAllText(filePass, provider.GetEncoding("shift_jis"));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
