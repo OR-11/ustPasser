@@ -1,16 +1,16 @@
 name-template: 'v$RESOLVED_VERSION 🌈'
 tag-template: 'v$RESOLVED_VERSION'
 categories:
-  - title: '🚀 機能/Features'
+  - title: '🚀 機能、改善/Features'
     labels:
       - '機能/feature'
       - '改善/enhancement'
-  - title: '🐛 Bug Fixes'
+  - title: '🐛 バグ、修正/Bug Fixes'
     labels:
       - '修正/fix'
       - 'バグ修正/bugfix'
       - 'バグ/bug'
-  - title: '🧰 Maintenance'
+  - title: '🧰 細かな変更/Maintenance'
     label: '詳かいこと/chore'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
