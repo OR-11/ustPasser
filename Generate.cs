@@ -88,17 +88,4 @@ namespace ustPasser
             return Http.SendAsync(request).Result.Content.ReadAsByteArrayAsync().Result;
         }
     }
-
-    public class Note
-    {//keyはmidi準拠、lengthは、sec*frame rate(95くらいのやつ)=length
-        public Note(int? key, float length, string lyric)
-        {
-            this.key = key;
-            this.length = length;
-            this.lyric = lyric;
-        }
-        public int? key;
-        public float length;
-        public string lyric;
-    }
 }

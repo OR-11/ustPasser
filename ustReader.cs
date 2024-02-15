@@ -46,6 +46,11 @@ namespace ustPasser
              * float Intensity //音の強さ
              * float Modulation
              * float Moduration
+             * 
+             * (Mode1がある場合:)
+             * int/string PBType //通常は5。OldDataの場合はwarningを出す
+             * int,int... PitchBend
+             * float PBStart
              */
         }
 
@@ -57,6 +62,18 @@ namespace ustPasser
             {
                 Console.WriteLine(UstData[i].Keys.ToArray()[2] +","+UstData[i][UstData[i].Keys.ToArray()[2]]);
                 notes.Add(new Note(UstData[i]["Lyric"].ToString() == "R" ? null : int.Parse(UstData[i]["NoteNum"]), float.Parse(UstData[i]["Length"]) / 480f, UstData[i]["Lyric"].ToString() == "R" ? "" : (string)UstData[i]["Lyric"]));
+                if (UstData[i].ContainsKey("PBType"))//Mode1
+                {
+                    Console.WriteLine(UstData[i]["PBType"].ToString()+"__");
+                    notes[i - 1].PBType = UstData[i]["PBType"].ToString();
+                    List<int> temp = new List<int>();
+                    foreach(string j in UstData[i]["Piches"].ToString().Split(','))
+                    {
+                        temp.Add(int.Parse(j));
+                    }
+                    notes[i - 1].Pitches = temp.ToArray();
+                    notes[i - 1].PBType = UstData[i]["PBType"].ToString();
+                }
             }
             return notes.ToArray();
         }
