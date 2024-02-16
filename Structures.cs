@@ -36,9 +36,9 @@ namespace ustPasser
         public class mode2
         {
             public (int PosMs, float PitchShift) PBS;
-            public List<float> PBW = new List<float>();
-            public List<float> PBY = new List<float>();
-            public List<char> PBM = new List<char>();
+            public float[] PBW;
+            public float[] PBY;
+            public char?[] PBM;
             public float[] VBR = new float[7];
         }
         public mode2 Mode2 = new mode2();
