@@ -46,17 +46,81 @@ namespace ustPasser
              * float Intensity //音の強さ
              * float Modulation
              * float Moduration
+             * 
+             * (Mode1がある場合:)
+             * int/string PBType //通常は5。OldDataの場合はwarningを出す
+             * int,int... PitchBend
+             * float PBStart
+             * 
+             * (Mode2がある場合:)
+             * (int,float=0) PBS
+             * float[] PBW
+             * float[] PBY
+             * float[7]+任意(未使用) VBR
              */
         }
 
         public static Note[] ConvertUstToNotes(List<Dictionary<string, dynamic>> UstData)
         {
             List<Note> notes = new List<Note>();
-            Console.WriteLine(UstData[^1].Keys.Count);
             for (int i = 1; i < UstData.Count; i++)
             {
-                Console.WriteLine(UstData[i].Keys.ToArray()[2] +","+UstData[i][UstData[i].Keys.ToArray()[2]]);
                 notes.Add(new Note(UstData[i]["Lyric"].ToString() == "R" ? null : int.Parse(UstData[i]["NoteNum"]), float.Parse(UstData[i]["Length"]) / 480f, UstData[i]["Lyric"].ToString() == "R" ? "" : (string)UstData[i]["Lyric"]));
+                
+                if (UstData[i].ContainsKey("PBType"))//Mode1
+                {
+                    notes[i - 1].Mode1.PBType = UstData[i]["PBType"].ToString();
+                    List<int> temp = new List<int>();
+                    foreach(string j in UstData[i]["Piches"].ToString().Split(','))
+                    {
+                        temp.Add(j == "" ? 0 : int.Parse(j));
+                    }
+                    notes[i - 1].Mode1.Pitches = temp.ToArray();
+                    notes[i - 1].Mode1.PBType = UstData[i]["PBType"].ToString();
+                }
+
+                //Mode2
+                if (UstData[i].ContainsKey("PBS"))
+                {
+                    notes[i - 1].Mode2.PBS = ((int PosMs, float PitchShift))(UstData[i]["PBS"].ToString().Contains(';') ? 
+                        (Int32.Parse(UstData[i]["PBS"].ToString().Split(';')[0]), float.Parse(UstData[i]["PBS"].ToString().Split(';')[1])) : 
+                        (Int32.Parse(UstData[i]["PBS"].ToString()), 0f));
+                    {
+                        List<float> temp = new List<float>();
+                        foreach (string j in UstData[i]["PBW"].ToString().Split(','))
+                        {
+                            temp.Add(float.Parse(j));
+                        }
+                        notes[i - 1].Mode2.PBW = temp.ToArray();
+                    }
+                    if (UstData[i].ContainsKey("PBY"))
+                    {
+                        List<float> temp = new List<float>();
+                        foreach (string j in UstData[i]["PBY"].ToString().Split(','))
+                        {
+                            temp.Add(j == "" ? 0 : float.Parse(j));
+                        }
+                        notes[i - 1].Mode2.PBY = temp.ToArray();
+                    }
+                    if (UstData[i].ContainsKey("PBM"))
+                    {
+                        List<char?> temp = new List<char?>();
+                        foreach (string j in UstData[i]["PBM"].ToString().Split(','))
+                        {
+                            temp.Add(j == "" ? null : char.Parse(j));
+                        }
+                        notes[i - 1].Mode2.PBM = temp.ToArray();
+                    }
+                    if (UstData[i].ContainsKey("VBR"))
+                    {
+                        List<float> temp = new List<float>();
+                        foreach(float j in UstData[i]["VBR"].ToString().Split(',')[0..^2])
+                        {
+                            temp.Add(j);
+                        }
+                        notes[i - 1].Mode2.VBR = temp.ToArray();
+                    }
+                }
             }
             return notes.ToArray();
         }
