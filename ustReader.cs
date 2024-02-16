@@ -51,6 +51,12 @@ namespace ustPasser
              * int/string PBType //通常は5。OldDataの場合はwarningを出す
              * int,int... PitchBend
              * float PBStart
+             * 
+             * (Mode2がある場合:)
+             * (int,float=0) PBS
+             * float[] PBW
+             * float[] PBY
+             * float[7]+任意(未使用) VBR
              */
         }
 
@@ -65,14 +71,14 @@ namespace ustPasser
                 if (UstData[i].ContainsKey("PBType"))//Mode1
                 {
                     Console.WriteLine(UstData[i]["PBType"].ToString()+"__");
-                    notes[i - 1].PBType = UstData[i]["PBType"].ToString();
+                    notes[i - 1].Mode1.PBType = UstData[i]["PBType"].ToString();
                     List<int> temp = new List<int>();
                     foreach(string j in UstData[i]["Piches"].ToString().Split(','))
                     {
                         temp.Add(int.Parse(j));
                     }
-                    notes[i - 1].Pitches = temp.ToArray();
-                    notes[i - 1].PBType = UstData[i]["PBType"].ToString();
+                    notes[i - 1].Mode1.Pitches = temp.ToArray();
+                    notes[i - 1].Mode1.PBType = UstData[i]["PBType"].ToString();
                 }
             }
             return notes.ToArray();
