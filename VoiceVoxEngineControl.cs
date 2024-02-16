@@ -65,7 +65,6 @@ namespace ustPasser
             try
             {
                 process.Kill();//VOICEVOXも多分この方法でやってる
-                Console.WriteLine(process);
             }
             catch (Exception)
             {

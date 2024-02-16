@@ -23,8 +23,24 @@ namespace ustPasser
 
         //Mode1
         //https://w.atwiki.jp/utaou/pages/64.html#id_8fbd1ddf
-        public string PBType;
-        public int[] Pitches;
-        public float PBStart;
+        public class mode1
+        {
+            public string PBType;
+            public int[] Pitches;
+            public float PBStart;
+        }
+        public mode1 Mode1 = new mode1();
+
+        //Mode2
+        //https://w.atwiki.jp/utaou/pages/64.html#id_13fa83af
+        public class mode2
+        {
+            public (int PosMs, float PitchShift) PBS;
+            public float[] PBW;
+            public float[] PBY;
+            public char?[] PBM;
+            public float[] VBR = new float[7];
+        }
+        public mode2 Mode2 = new mode2();
     }
 }

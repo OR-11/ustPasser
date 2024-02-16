@@ -47,7 +47,6 @@ namespace ustPasser
             }
 
             jsonContent += @"]}";
-            Console.WriteLine(jsonContent);
             var content = new StringContent(jsonContent, Encoding.UTF8, @"application/json");
             var result = Http.PostAsync(@"http://127.0.0.1:" + VoiceVoxEngineControl.ServerPort().ToString() + @"/sing_frame_audio_query?speaker=" + speaker + @"&core_version=" + core_version, content).Result;
             if (((int)result.StatusCode)==200) return result.Content.ReadAsStringAsync().Result;
@@ -63,7 +62,6 @@ namespace ustPasser
             if (key != 0)
             {
                 var temp = JsonToLibary.ParseJson(bodyData);
-                Console.WriteLine(temp.GetType());
                 double[] fs = new double[temp["f0"].Count];
                 for (int i = 0;i< temp["f0"].Count; i++)
                 {
